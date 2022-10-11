@@ -1,0 +1,71 @@
+.menu {
+  width: 15rem;
+  border-radius: 0.7rem;
+  box-shadow: 0 0px 10px rgba(36, 35, 35, 0.062);
+  padding-top: 1rem;
+  padding: 0 0.7rem 0;
+  border: none;
+  margin: 0rem 2rem 2rem 2rem;
+  background-color: rgb(252, 247, 249);
+}
+
+.menu-img-container {
+  position: relative;
+}
+
+.menu-img {
+  display: block;
+  margin: 0 auto;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(36, 35, 35, 0.493);
+}
+
+.menu h2 {
+  font-weight: 600;
+  font-size: 17px;
+  color: #00302e;
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.menu .menu-description {
+  font-weight: 400;
+  font-size: 11px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.69);
+  padding: 0 2rem;
+  margin-top: 1.3rem;
+}
+
+.menu .menu-price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.menu .menu-price-container .menu-price {
+  font-weight: 700;
+  font-size: 13px;
+  color: #00302e;
+}
+
+.menu .menu-price-container .menu-add {
+  font-weight: 500;
+  font-size: 13px;
+  text-align: right;
+  color: #06e775;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .menu {
+    width: 80%;
+  }
+}

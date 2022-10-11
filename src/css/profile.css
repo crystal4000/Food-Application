@@ -1,0 +1,147 @@
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 2s ease-in-out;
+}
+
+.modal-content {
+  width: 40vw;
+  background-color: rgb(247, 250, 253);
+  height: 100vh;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modal-content .close-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding: 0 2rem;
+}
+
+.modal-content .close-btn .close {
+  font-size: 25px;
+  color: #00302e;
+  cursor: pointer;
+}
+
+.modal-content .modal-header {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  box-shadow: 0 0px 10px rgba(36, 35, 35, 0.062);
+  padding: 0 0.7rem 0;
+  border: none;
+  margin: 2rem 2rem 2rem 2rem;
+  background: url(../assets/Dashboard/Me.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.modal-body {
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.modal-body h3 {
+  font-weight: 600;
+  font-size: 20px;
+  color: #00302e;
+  /* border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee; */
+  margin-bottom: 1rem;
+}
+
+.modal-body p {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 27px;
+  color: rgba(0, 0, 0, 0.69);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.modal-body .links-container,
+.modal-body .socials-container {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body .links-container .links,
+.modal-body .socials-container .links {
+  width: 3rem;
+  height: 3rem;
+  box-shadow: 0 10px 20px rgba(68, 66, 66, 0.151);
+  padding: 0.5rem;
+  border-radius: 50%;
+  margin: 0 1rem;
+}
+.modal-body .socials-container .links {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.3rem;
+}
+
+.modal-body .socials-container .links .icons.linkedin {
+  color: rgb(14, 26, 159);
+}
+
+.modal-body .links-container .links .icons {
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0rem;
+  color: #00302e;
+}
+
+.modal-body .links-container .links .icons.html {
+  color: orange;
+}
+
+.modal-body .links-container .links .icons.css {
+  color: rgb(48, 48, 155);
+}
+
+.modal-body .links-container .links .icons.react {
+  color: rgb(121, 121, 237);
+}
+
+@media screen and (max-width: 1024px) {
+  .modal-content {
+    width: 65vw;
+  }
+  .modal-content .modal-header {
+    margin: 12rem 2rem 2rem 2rem;
+  }
+
+  .modal-body p {
+    font-size: 15px;
+  }
+
+  .modal-body .links-container {
+    margin: 2rem 0;
+  }
+
+  .modal-body .links-container .links {
+    width: 6rem;
+    height: 6rem;
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    width: 100vw;
+  }
+}
