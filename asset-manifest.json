@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/Food-Application/static/css/main.104e1d96.css",
+    "main.js": "/Food-Application/static/js/main.1ce9620c.js",
+    "static/media/card-2.svg": "/Food-Application/static/media/card-2.dc50aaad22cee2678437f1855be43f78.svg",
+    "static/media/login-img.svg": "/Food-Application/static/media/login-img.5040107bf5de197ee4e0.svg",
+    "static/media/hero1.svg": "/Food-Application/static/media/hero1.236f065a4387eaeee1a594dc039ddcbd.svg",
+    "static/media/card-3.svg": "/Food-Application/static/media/card-3.cf687375839d251c7ddf416d2e7717ae.svg",
+    "static/media/menu-1.svg": "/Food-Application/static/media/menu-1.2b8d05aae30956479527361d19402aae.svg",
+    "static/media/card-1.svg": "/Food-Application/static/media/card-1.07275fa7237b628f12663e6131860244.svg",
+    "static/media/menu-2.svg": "/Food-Application/static/media/menu-2.3b6a41f0d4d2a43b125bbea2ef4dfe07.svg",
+    "static/media/menu-3.svg": "/Food-Application/static/media/menu-3.3b6a41f0d4d2a43b125bbea2ef4dfe07.svg",
+    "static/media/menu-6.svg": "/Food-Application/static/media/menu-6.3b6a41f0d4d2a43b125bbea2ef4dfe07.svg",
+    "static/media/register-img.svg": "/Food-Application/static/media/register-img.284de9c8e09798bc6cd0.svg",
+    "static/media/menu-4.svg": "/Food-Application/static/media/menu-4.b447d2f79856a0b03e60fa49b4713cc1.svg",
+    "static/media/menu-5.svg": "/Food-Application/static/media/menu-5.b447d2f79856a0b03e60fa49b4713cc1.svg",
+    "static/media/Me.jpg": "/Food-Application/static/media/Me.7e388109ff1b73165fd8.jpg",
+    "static/media/appstore.svg": "/Food-Application/static/media/appstore.c9e1b31261a1ec37cfa28645daee4acc.svg",
+    "static/media/googleplay.svg": "/Food-Application/static/media/googleplay.8722cd9f0c0470a6024cba7ac8ac0695.svg",
+    "static/media/user.svg": "/Food-Application/static/media/user.548c19c2ec727672c5d85620846b8f39.svg",
+    "static/media/logo.svg": "/Food-Application/static/media/logo.6e96f13443298336b7581f5e2326caaf.svg",
+    "static/media/loader.svg": "/Food-Application/static/media/loader.ce071dbda4fe85ac72b71743492246dd.svg",
+    "index.html": "/Food-Application/index.html",
+    "main.104e1d96.css.map": "/Food-Application/static/css/main.104e1d96.css.map",
+    "main.1ce9620c.js.map": "/Food-Application/static/js/main.1ce9620c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.104e1d96.css",
+    "static/js/main.1ce9620c.js"
+  ]
+}
