@@ -43,16 +43,18 @@
 @media screen and (max-width: 600px) {
   .products header {
     margin-top: 1rem;
-    padding: 0px 0.8rem;
+    padding: 0;
   }
   .products p span {
     font-size: 13px;
   }
-  .products p {
+  .products header p {
+    margin: 0 2rem;
     font-size: 23px;
   }
   .products .user {
     height: 3rem;
     width: 3rem;
+    display: none;
   }
 }

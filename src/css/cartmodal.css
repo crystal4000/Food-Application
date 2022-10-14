@@ -178,13 +178,13 @@
   }
   .cart-modal-content .cart {
     display: grid;
-    grid-template-columns: 45% repeat(3, 20%);
+    grid-template-columns: 40% repeat(3, 22%);
     font-size: 13px;
   }
 
   .cart-items {
     display: grid;
-    grid-template-columns: 45% repeat(3, 20%);
+    grid-template-columns: 40% repeat(3, 20%);
   }
 
   .cart-items .cart-item-image {
@@ -195,5 +195,16 @@
   .cart-items .cart-item-price,
   .cart-items .cart-item-subtotal {
     font-size: 13px;
+  }
+
+  .cart-items .cart-item-quantity {
+    padding-left: 0.4rem;
+  }
+  .cart-items .cart-item-price {
+    padding-left: 0.5rem;
+  }
+
+  .cart-items .cart-item-subtotal {
+    padding-left: 1rem;
   }
 }

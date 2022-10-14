@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/checkout.css";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -60,7 +60,7 @@ const Checkout = ({ show, falseCheckout, updateOrders, cart }) => {
       >
         <div className="close-btn">
           {
-            <FaTimes
+            <CgClose
               className="close"
               onClick={() => {
                 falseCheckout();

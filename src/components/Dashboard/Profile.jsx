@@ -5,7 +5,7 @@ import { FaCss3Alt } from "react-icons/fa";
 import { FaReact } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 
 const Profile = ({ show, falseProfile }) => {
   if (!show) {
@@ -18,7 +18,7 @@ const Profile = ({ show, falseProfile }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="close-btn">
           {
-            <FaTimes
+            <CgClose
               className="close"
               onClick={() => {
                 falseProfile();
@@ -33,10 +33,22 @@ const Profile = ({ show, falseProfile }) => {
           <h3>Fredrick Tania-Amanda</h3>
           <div className="socials-container">
             <div className="links">
-              <FaLinkedinIn className="icons linkedin" />
+              <a
+                href="https://www.linkedin.com/in/amanda-fredrick-277980248/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedinIn className="icons linkedin" />
+              </a>
             </div>
             <div className="links">
-              <FaGithub className="icons github" />
+              <a
+                href="https://github.com/crystal4000"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub className="icons github" />
+              </a>
             </div>
           </div>
           <p className="profile-info">

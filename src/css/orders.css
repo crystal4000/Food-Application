@@ -32,7 +32,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .orders-modal-content .close-btn .close {
@@ -138,17 +138,22 @@
   .orders-modal-content {
     width: 100vw;
   }
+  .orders-modal-content .close-btn .close {
+    margin-top: 2rem;
+  }
   .orders-modal-content .orders {
     display: grid;
-    grid-template-columns: 45% repeat(3, 22%);
+    grid-template-columns: 43% repeat(3, 21%);
     font-size: 13px;
   }
 
   .orders-items {
     display: grid;
-    grid-template-columns: 45% repeat(3, 22%);
+    grid-template-columns: 39% repeat(3, 23%);
   }
-
+  .orders-items .orders-item-quantity {
+    padding-left: 1rem;
+  }
   .orders-items .orders-item-quantity,
   .orders-items .orders-item-price {
     font-weight: 700;
@@ -160,5 +165,6 @@
     font-weight: 500;
     font-size: 13px;
     color: #3a8f4d;
+    padding-left: 0.3rem;
   }
 }

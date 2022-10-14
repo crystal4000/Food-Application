@@ -121,6 +121,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+    background-position: center center;
   }
 
   .register-section .contentBx {
@@ -137,5 +138,21 @@
     padding: 40px;
     background: rgb(255 255 255 / 0.9);
     margin: 50px;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-section .contentBx .signup-form h1 {
+    font-size: 1.2rem;
+  }
+  .register-section .contentBx .signup-form .already {
+    font-size: 11px;
+  }
+  .register-section .contentBx .signup-form input {
+    text-indent: 0.7rem;
+  }
+
+  .register-section .contentBx .signup-form .password .show-btn {
+    padding-right: 10px;
   }
 }

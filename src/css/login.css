@@ -162,4 +162,24 @@
     justify-content: space-between;
     flex-direction: column;
   }
+
+  .register-section .contentBx .signup-form h1 {
+    font-size: 1.3rem;
+  }
+
+  .register-section .contentBx .signup-form .already {
+    font-size: 11px;
+  }
+
+  .register-section .contentBx .signup-form input {
+    text-indent: 0.7rem;
+  }
+
+  .register-section .contentBx .signup-form .password .show-btn {
+    padding-right: 10px;
+  }
+
+  .register-section .contentBx .signup-form .already {
+    margin-top: 1rem;
+  }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/orders.css";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 
 const Orders = ({ show, falseOrders, orders }) => {
   if (!show) {
@@ -20,7 +20,7 @@ const Orders = ({ show, falseOrders, orders }) => {
       >
         <div className="close-btn">
           {
-            <FaTimes
+            <CgClose
               className="close"
               onClick={() => {
                 falseOrders();

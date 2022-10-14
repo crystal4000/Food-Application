@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/cartmodal.css";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -59,7 +59,7 @@ const CartModal = ({ show, falseCart, cart, updateCart, setCheckout }) => {
       <div className="cart-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="close-btn">
           {
-            <FaTimes
+            <CgClose
               className="close"
               onClick={() => {
                 falseCart();

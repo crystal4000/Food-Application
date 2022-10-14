@@ -98,9 +98,9 @@ html {
   border: 0;
   height: 2.5rem;
   width: 2.5rem;
-  background-color: #e2b885;
+  background-color: transparent;
   border-radius: 10%;
-  color: var(--color-bg);
+  color: #e2b885;
   cursor: pointer;
   transition: all 400ms ease-in-out;
   display: none;
@@ -427,10 +427,22 @@ html {
 /* **********************************  MEDIA QUERIES (SMALL DEVICES) ************************* */
 @media screen and (max-width: 600px) {
   .navBar {
-    padding: 0 2rem;
+    padding: 0 1rem;
+  }
+
+  .navBar .nav-brand a img {
+    width: 3rem;
+    height: 3rem;
+  }
+  .navBar .nav-brand a p {
+    font-weight: 700;
+    font-size: 35px;
+    color: #fff;
+    margin-left: 20px;
   }
   .navBar .nav-links button {
     display: flex;
+    background: transparent;
   }
 
   .navBar .nav-links .links {
@@ -464,6 +476,9 @@ html {
     margin: 20px;
   }
 
+  .hero-left h1 {
+    font-size: 1.5rem;
+  }
   .hero {
     padding: 3rem 2rem;
     flex-direction: column;
@@ -479,7 +494,7 @@ html {
   }
 
   .meals h1 {
-    padding-left: 2rem;
+    padding-left: 0.5rem;
     font-size: 1.5rem;
   }
 
@@ -488,7 +503,7 @@ html {
     font-size: 1rem;
   }
   .meals .loader {
-    left: 13%;
+    left: 9.5%;
   }
 
   .notify {
@@ -507,7 +522,7 @@ html {
 
   .notify .form input {
     margin: 0rem 7rem 1.5rem;
-    width: 23rem;
+    width: 21rem;
   }
 
   .footer .footer-links {
@@ -521,7 +536,7 @@ html {
     text-align: center;
   }
   .footer .footer-links .links h3 {
-    font-size: 2.125rem;
+    font-size: 2rem;
   }
 
   .footer .footer-links .links p a {

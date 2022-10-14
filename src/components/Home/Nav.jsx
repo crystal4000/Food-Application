@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import logo from "../../assets/Landing Page/logo.svg";
 import { HiMenu } from "react-icons/hi";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 
 const Nav = () => {
   const [showLinks, setShowLinks] = useState(false);
@@ -33,7 +33,7 @@ const Nav = () => {
         <button onClick={() => setShowLinks(!showLinks)}>
           {/* <HiMenu className="hamburger" /> */}
           {showLinks ? (
-            <FaTimes className="hamburger" />
+            <CgClose className="hamburger" />
           ) : (
             <HiMenu className="hamburger" />
           )}

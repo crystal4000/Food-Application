@@ -7,7 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
-import { FaTimes } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
 
 const SIdeBar = (props) => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const SIdeBar = (props) => {
         </div>
         <button onClick={() => setSideBar(!sideBar)}>
           {sideBar ? (
-            <FaTimes className="hamburger" />
+            <CgClose className="hamburger" />
           ) : (
             <HiMenu className="hamburger" />
           )}

@@ -14,7 +14,7 @@
 .modal-content {
   width: 40vw;
   background-color: rgb(247, 250, 253);
-  height: 100vh;
+  height: 100%;
   transition: all 0.5s ease-in-out;
   display: flex;
   align-items: center;
@@ -25,7 +25,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 3rem;
   padding: 0 2rem;
 }
 
@@ -78,6 +78,9 @@
   align-items: center;
   justify-content: center;
 }
+.modal-body .links-container .links {
+  cursor: pointer;
+}
 
 .modal-body .links-container .links,
 .modal-body .socials-container .links {
@@ -121,9 +124,9 @@
   .modal-content {
     width: 65vw;
   }
-  .modal-content .modal-header {
+  /* .modal-content .modal-header {
     margin: 12rem 2rem 2rem 2rem;
-  }
+  } */
 
   .modal-body p {
     font-size: 15px;
@@ -143,5 +146,11 @@
 @media screen and (max-width: 600px) {
   .modal-content {
     width: 100vw;
+  }
+
+  .modal-body .links-container .links {
+    width: 5rem;
+    height: 5rem;
+    padding: 1.7rem;
   }
 }
