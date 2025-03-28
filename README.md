@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# React Authentication App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application built with TypeScript, featuring user authentication, responsive design, and a clean UI.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- User Authentication (Login/Signup)
+- Responsive Navigation
+- Toast Notifications
+- Protected Routes
+- Modern UI with Tailwind CSS
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React 19.0.0
+- TypeScript
+- Firebase Authentication
+- React Router DOM v7
+- React Hook Form
+- Zod (Form Validation)
+- Tailwind CSS
+- Vite (Build Tool)
+- Sonner (Toast Notifications)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone <repository-url>
+cd my-react-app
+```
 
-### `npm run build`
+2. Install dependencies:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Create a `.env` file in the root directory and add your Firebase configuration:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
 
-### `npm run eject`
+## 🚀 Available Scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `npm run dev` - Starts the development server
+- `npm run build` - Builds the app for production
+- `npm run lint` - Runs ESLint
+- `npm run preview` - Preview the production build locally
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🏗️ Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+├── node_modules/          # Node modules
+├── api/                   # API related files
+├── public/                # Public assets
+├──src/                    # Source code
+    ├── assets/                # Static assets
+    ├── components/            # Reusable components
+    ├── css/                   # Global styles
+    ├── pages/                 # App pages
+    ├── App.css                # Global styles
+    ├── App.tsx                # Main app component
+    ├── main.tsx               # Entry point
+    ├── index.css              # Global styles
+    ├── firebase.ts            # Firebase configuration
+    ├── vite-env.d.ts          # Vite environment variables
+    ├── schema.ts              # Zod form validation schema
+├── .env                   # Environment variables
+├── .gitignore             # Git ignore file
+├── eslint.config.js       # ESLint configuration
+├── index.html             # HTML template
+├── package.json           # Project dependencies
+├── package-lock.json      # Project dependencies lock file
+└── postcss.config.js      # PostCSS configuration
+├── README.md              # Project documentation             # API related files
+├── tailwind.config.js     # Tailwind CSS configuration
+├── tsconfig.app.json      # TypeScript configuration for app
+├── tsconfig.json          # TypeScript configuration
+├── tsconfig.node.json     # TypeScript configuration for node
+├── vite.config.ts         # Vite configuration
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎨 Features & Implementation
 
-## Learn More
+### Authentication
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Email/Password authentication using Firebase
+- Protected routes for authenticated users
+- User session management
+- Logout functionality
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### UI/UX
 
-### Code Splitting
+- Responsive navigation with hamburger menu
+- Form validation using Zod
+- Toast notifications for user feedback
+- Custom styling with Tailwind CSS
+- Smooth animations and transitions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔒 Environment Variables
 
-### Analyzing the Bundle Size
+The following environment variables are required:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_STORAGE_BUCKET`
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `VITE_FIREBASE_APP_ID`
 
-### Making a Progressive Web App
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Advanced Configuration
+## 📝 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the LICENSE file for details.
