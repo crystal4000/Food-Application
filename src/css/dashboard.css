@@ -1,0 +1,19 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  position: relative;
+  padding-bottom: 3rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: 35% 65%;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .dashboard {
+    display: block;
+  }
+}
