@@ -7,8 +7,8 @@ import {
   updateProfile,
   AuthError,
 } from "firebase/auth";
-import { auth } from "../firebase";
-import { SignupFormValues, signupSchema } from "../schema";
+import { auth } from "../utils/firebase";
+import { SignupFormValues, signupSchema } from "../utils/schema";
 import { toast } from "sonner";
 import { FaUser, FaEye, FaEyeSlash, FaLock, FaArrowLeft } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -46,7 +46,6 @@ const Signup: React.FC = () => {
         data.password
       );
 
-      // Update the user's display name
       if (userCredential.user) {
         await updateProfile(userCredential.user, {
           displayName: data.name,
@@ -64,28 +63,31 @@ const Signup: React.FC = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // This navigates to the previous page
+    navigate(-1);
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex flex-col md:flex-row h-screen w-full">
       {/* Left side - Form */}
-      <div className="w-1/2 flex items-center justify-center p-8 bg-white relative">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-white relative min-h-[100vh] md:min-h-0">
         {/* Back Button */}
         <button
           onClick={handleBack}
-          className="absolute top-8 left-8 flex items-center text-color-bg hover:text-custom-orange transition-colors duration-200"
+          className="absolute top-4 md:top-8 left-4 md:left-8 flex items-center text-color-bg hover:text-custom-orange transition-colors duration-200"
         >
           <FaArrowLeft className="h-5 w-5 mr-2" />
           <span className="text-sm font-medium">Back</span>
         </button>
 
-        <div className="w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-8 text-center text-color-bg">
+        <div className="w-full max-w-md px-4 md:px-0">
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-color-bg">
             Let's Make Your Order
           </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-6 md:space-y-10"
+          >
             <div className="relative">
               <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-color-bg transition-colors duration-200">
                 <span className="text-color-bg mr-2">
@@ -162,7 +164,7 @@ const Signup: React.FC = () => {
             </button>
           </form>
 
-          <div className="mt-8 text-center">
+          <div className="mt-6 md:mt-8 text-center">
             <p className="text-sm text-color-bg">
               Already have an account?{" "}
               <span
@@ -174,7 +176,7 @@ const Signup: React.FC = () => {
             </p>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6 md:mt-8">
             <div className="flex items-center justify-center space-x-4">
               <p className="text-sm font-medium text-color-bg">Follow us</p>
               {/* Social Icons */}
@@ -193,7 +195,7 @@ const Signup: React.FC = () => {
       </div>
 
       {/* Right side - Food Image with Overlay */}
-      <div className="w-1/2 relative">
+      <div className="hidden md:block w-full md:w-1/2 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-custom-orange/40 to-color-bg/40 z-10" />
         <div
           className="h-full w-full bg-center bg-cover"

@@ -1,27 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
 import logo from "../../assets/landing_page/logo.svg";
 import { HiMenu } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { toast } from "sonner";
+import { getInitials } from "../../utils/functions";
+import { useAuth } from "../../hooks/useAuth";
 
 const Nav = () => {
   const [showLinks, setShowLinks] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [user, setUser] = useState(auth.currentUser);
+  const user = useAuth();
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,14 +41,6 @@ const Nav = () => {
     } catch (error) {
       toast.error("Error logging out" + error);
     }
-  };
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
   };
 
   const links = user
