@@ -1,14 +1,17 @@
-# React Authentication App
+# Lilies Food Ordering App
 
-A modern React application built with TypeScript, featuring user authentication, responsive design, and a clean UI.
+A modern React food ordering application built with TypeScript, featuring user authentication, responsive design, and a clean UI for ordering food anytime, anywhere.
 
 ## 🚀 Features
 
-- User Authentication (Login/Signup)
-- Responsive Navigation
-- Toast Notifications
+- User Authentication (Login/Signup/Password Reset)
+- Dashboard with Multiple Sections (Home, Favorites, Cart, Messages, Orders)
+- Responsive Navigation with Mobile Support
+- Real-time Toast Notifications
 - Protected Routes
-- Modern UI with Tailwind CSS
+- Modern UI with Custom Tailwind Theme
+- Search Functionality
+- User Profile Management
 
 ## 🛠️ Tech Stack
 
@@ -16,11 +19,11 @@ A modern React application built with TypeScript, featuring user authentication,
 - TypeScript
 - Firebase Authentication
 - React Router DOM v7
-- React Hook Form
-- Zod (Form Validation)
+- React Hook Form with Zod Validation
 - Tailwind CSS
-- Vite (Build Tool)
+- Vite
 - Sonner (Toast Notifications)
+- React Icons
 
 ## 📦 Installation
 
@@ -51,41 +54,31 @@ VITE_FIREBASE_APP_ID=your_app_id
 ## 🚀 Available Scripts
 
 - `npm run dev` - Starts the development server
-- `npm run build` - Builds the app for production
+- `npm run build` - Builds the app for production (runs TypeScript build first)
 - `npm run lint` - Runs ESLint
 - `npm run preview` - Preview the production build locally
 
 ## 🏗️ Project Structure
 
 ```
-├── node_modules/          # Node modules
-├── api/                   # API related files
-├── public/                # Public assets
-├──src/                    # Source code
-    ├── assets/                # Static assets
-    ├── components/            # Reusable components
-    ├── css/                   # Global styles
-    ├── pages/                 # App pages
-    ├── App.css                # Global styles
-    ├── App.tsx                # Main app component
-    ├── main.tsx               # Entry point
-    ├── index.css              # Global styles
-    ├── firebase.ts            # Firebase configuration
-    ├── vite-env.d.ts          # Vite environment variables
-    ├── schema.ts              # Zod form validation schema
-├── .env                   # Environment variables
-├── .gitignore             # Git ignore file
-├── eslint.config.js       # ESLint configuration
-├── index.html             # HTML template
-├── package.json           # Project dependencies
-├── package-lock.json      # Project dependencies lock file
-└── postcss.config.js      # PostCSS configuration
-├── README.md              # Project documentation             # API related files
-├── tailwind.config.js     # Tailwind CSS configuration
-├── tsconfig.app.json      # TypeScript configuration for app
-├── tsconfig.json          # TypeScript configuration
-├── tsconfig.node.json     # TypeScript configuration for node
-├── vite.config.ts         # Vite configuration
+src/
+├── assets/                # Static assets including landing page images
+├── components/
+│   ├── Dashboard/        # Dashboard-specific components
+│   ├── Home/            # Landing page components
+│   └── Card.tsx         # Reusable card component
+├── css/                  # Global styles
+├── hooks/               # Custom hooks (useAuth, etc.)
+├── pages/               # Main application pages
+│   ├── Dashboard.tsx
+│   ├── Home.tsx
+│   ├── Login.tsx
+│   ├── NewPassword.tsx
+│   ├── ResetPassword.tsx
+│   └── Signup.tsx
+├── utils/               # Utility functions and Firebase config
+├── App.tsx             # Main app component with routes
+└── main.tsx            # Application entry point
 ```
 
 ## 🎨 Features & Implementation
@@ -93,21 +86,49 @@ VITE_FIREBASE_APP_ID=your_app_id
 ### Authentication
 
 - Email/Password authentication using Firebase
-- Protected routes for authenticated users
+- Password reset functionality
+- Protected dashboard routes
 - User session management
-- Logout functionality
+- Profile picture support
+
+### Dashboard Features
+
+- Sidebar navigation with multiple sections
+- Search functionality for meals and restaurants
+- Notification system
+- User profile management
+- Order management system
 
 ### UI/UX
 
-- Responsive navigation with hamburger menu
-- Form validation using Zod
+- Custom color scheme with Tailwind
+- Responsive design for all screen sizes
+- Mobile-first approach
 - Toast notifications for user feedback
-- Custom styling with Tailwind CSS
-- Smooth animations and transitions
+- Smooth transitions and animations
+- Mobile app download options (Google Play & App Store)
+
+### Landing Page
+
+- Hero section with app promotion
+- Special meals showcase
+- Newsletter subscription
+- Footer with multiple sections
+- Social media integration
+
+## 🎯 Custom Theme Colors
+
+The application uses a custom color palette defined in Tailwind:
+
+- Primary Background: #00302e
+- Custom Orange: #f5c994
+- Footer Background: #0b0d17
+- Various white opacity variants
+- Custom border colors
 
 ## 🔒 Environment Variables
 
-The following environment variables are required:
+Required Firebase configuration variables:
 
 - `VITE_FIREBASE_API_KEY`
 - `VITE_FIREBASE_AUTH_DOMAIN`
