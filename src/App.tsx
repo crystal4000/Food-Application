@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
 import NewPassword from "./pages/NewPassword";
+import Favorites from "./pages/Favorites";
+import DashboardLayout from "./components/Dashboard/DashboardLayout";
 
 function App() {
   return (
@@ -16,7 +18,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/new-password" element={<NewPassword />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Route>
       </Routes>
       <Toaster position="top-right" richColors />
     </>
