@@ -67,90 +67,94 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full">
-      {/* Left side - Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-white relative min-h-[100vh] md:min-h-0">
-        {/* Back Button */}
+    <div className="flex flex-col md:flex-row min-h-screen w-full bg-gradient-to-br from-teal-700 to-emerald-900 overflow-hidden">
+      {/* Background effects - adjusted for better mobile display */}
+      <div className="absolute top-20 sm:top-40 right-8 sm:right-20 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 rounded-full bg-teal-400/20 blur-3xl"></div>
+      <div className="absolute bottom-20 sm:bottom-40 left-8 sm:left-1/4 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 rounded-full bg-teal-500/10 blur-3xl"></div>
+
+      {/* Form side - centered both vertically and horizontally on all devices */}
+      <div className="w-full md:w-1/2 flex items-center justify-center min-h-screen p-4 md:p-8 relative z-10">
+        {/* Back Button - responsive sizing */}
         <button
           onClick={handleBack}
-          className="absolute top-4 md:top-8 left-4 md:left-8 flex items-center text-color-bg hover:text-custom-orange transition-colors duration-200"
+          className="absolute top-4 left-4 flex items-center text-white/90 hover:text-custom-orange transition-colors duration-200"
         >
-          <FaArrowLeft className="h-5 w-5 mr-2" />
-          <span className="text-sm font-medium">Back</span>
+          <FaArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
+          <span className="text-xs sm:text-sm font-medium">Back</span>
         </button>
 
-        <div className="w-full max-w-md px-4 md:px-0">
-          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-color-bg">
+        <div className="w-full max-w-sm sm:max-w-md px-4 sm:px-6 py-6 sm:py-8 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 text-center text-white">
             Let's Make Your Order
           </h1>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6 md:space-y-10"
+            className="space-y-4 sm:space-y-6 md:space-y-8"
           >
             <div className="relative">
-              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-color-bg transition-colors duration-200">
-                <span className="text-color-bg mr-2">
-                  <FaUser className="h-5 w-5" />
+              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
+                <span className="text-white/90 mr-2">
+                  <FaUser className="h-4 w-4 sm:h-5 sm:w-5" />
                 </span>
                 <input
                   {...register("name")}
                   type="text"
                   placeholder="Sara Tancredi"
-                  className="appearance-none bg-transparent border-none w-full text-color-bg mr-3 py-1 px-2 leading-tight focus:outline-none placeholder-color-bg/50"
+                  className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
               </div>
               {errors.name && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-xs text-red-300 mt-1">
                   {errors.name.message}
                 </p>
               )}
             </div>
 
             <div className="relative">
-              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-color-bg transition-colors duration-200">
-                <span className="text-color-bg mr-2">
-                  <MdEmail className="h-5 w-5" />
+              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
+                <span className="text-white/90 mr-2">
+                  <MdEmail className="h-4 w-4 sm:h-5 sm:w-5" />
                 </span>
                 <input
                   {...register("email")}
                   type="email"
                   placeholder="Sara.Tancredi@gmail.com"
-                  className="appearance-none bg-transparent border-none w-full text-color-bg mr-3 py-1 px-2 leading-tight focus:outline-none placeholder-color-bg/50"
+                  className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-xs text-red-300 mt-1">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
             <div className="relative">
-              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-color-bg transition-colors duration-200">
-                <span className="text-color-bg mr-2">
-                  <FaLock className="h-5 w-5" />
+              <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
+                <span className="text-white/90 mr-2">
+                  <FaLock className="h-4 w-4 sm:h-5 sm:w-5" />
                 </span>
                 <input
                   {...register("password")}
                   type={passwordShown ? "text" : "password"}
                   placeholder="Password"
-                  className="appearance-none bg-transparent border-none w-full text-color-bg mr-3 py-1 px-2 leading-tight focus:outline-none placeholder-color-bg/50"
+                  className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
                 <button
                   onClick={togglePassword}
                   type="button"
-                  className="text-color-bg"
+                  className="text-white/90"
                 >
                   {passwordShown ? (
-                    <FaEyeSlash className="h-5 w-5" />
+                    <FaEyeSlash className="h-4 w-4 sm:h-5 sm:w-5" />
                   ) : (
-                    <FaEye className="h-5 w-5" />
+                    <FaEye className="h-4 w-4 sm:h-5 sm:w-5" />
                   )}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-xs text-red-300 mt-1">
                   {errors.password.message}
                 </p>
               )}
@@ -158,45 +162,55 @@ const Signup: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-color-bg hover:bg-custom-orange text-custom-orange-text hover:text-color-bg font-bold rounded-full transition duration-200"
+              className="w-full py-2 sm:py-3 px-4 bg-gradient-to-r from-custom-orange to-amber-500 hover:from-custom-orange-hover hover:to-amber-600 text-emerald-900 font-bold rounded-full transition duration-300 shadow-lg text-sm sm:text-base"
             >
               Sign up
             </button>
           </form>
 
-          <div className="mt-6 md:mt-8 text-center">
-            <p className="text-sm text-color-bg">
+          <div className="mt-4 sm:mt-6 md:mt-8 text-center">
+            <p className="text-xs sm:text-sm text-white/90">
               Already have an account?{" "}
               <span
                 onClick={() => navigate("/login")}
-                className="font-medium text-custom-orange hover:text-custom-orange-hover cursor-pointer hover:underline"
+                className="font-medium text-custom-orange hover:text-amber-400 cursor-pointer hover:underline transition-colors duration-200"
               >
                 Log in
               </span>
             </p>
           </div>
 
-          <div className="mt-6 md:mt-8">
-            <div className="flex items-center justify-center space-x-4">
-              <p className="text-sm font-medium text-color-bg">Follow us</p>
-              {/* Social Icons */}
-              <a href="#" className="text-color-bg hover:text-custom-orange">
-                <FaTwitter className="h-5 w-5" />
+          <div className="mt-4 sm:mt-6 md:mt-8">
+            <div className="flex items-center justify-center space-x-3 sm:space-x-4">
+              <p className="text-xs sm:text-sm font-medium text-white/90">
+                Follow us
+              </p>
+              <a
+                href="#"
+                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
+              >
+                <FaTwitter className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
               </a>
-              <a href="#" className="text-color-bg hover:text-custom-orange">
-                <FaInstagram className="h-5 w-5" />
+              <a
+                href="#"
+                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
+              >
+                <FaInstagram className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
               </a>
-              <a href="#" className="text-color-bg hover:text-custom-orange">
-                <FaGoogle className="h-5 w-5" />
+              <a
+                href="#"
+                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
+              >
+                <FaGoogle className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Right side - Food Image with Overlay */}
+      {/* Image side */}
       <div className="hidden md:block w-full md:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-custom-orange/40 to-color-bg/40 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-custom-orange/30 to-emerald-900/70 backdrop-blur-sm z-10" />
         <div
           className="h-full w-full bg-center bg-cover"
           style={{
