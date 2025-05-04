@@ -30,8 +30,8 @@ export const mealdbApi = createApi({
     getMealsByCategory: builder.query<MealsResponse, string>({
       query: (category: string) => `filter.php?c=${category}`,
       providesTags: (
-        result?: MealsResponse,
-        error?: unknown,
+        _result?: MealsResponse,
+        _error?: unknown,
         category?: string
       ) => [{ type: "Meals", id: category }],
       // Transform the result to add prices (since API doesn't have prices)
