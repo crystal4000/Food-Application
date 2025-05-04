@@ -68,13 +68,10 @@ const Signup: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full bg-gradient-to-br from-teal-700 to-emerald-900 overflow-hidden">
-      {/* Background effects - adjusted for better mobile display */}
       <div className="absolute top-20 sm:top-40 right-8 sm:right-20 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 rounded-full bg-teal-400/20 blur-3xl"></div>
       <div className="absolute bottom-20 sm:bottom-40 left-8 sm:left-1/4 w-48 sm:w-64 md:w-80 h-48 sm:h-64 md:h-80 rounded-full bg-teal-500/10 blur-3xl"></div>
 
-      {/* Form side - centered both vertically and horizontally on all devices */}
       <div className="w-full md:w-1/2 flex items-center justify-center min-h-screen p-4 md:p-8 relative z-10">
-        {/* Back Button - responsive sizing */}
         <button
           onClick={handleBack}
           className="absolute top-4 left-4 flex items-center text-white/90 hover:text-custom-orange transition-colors duration-200"
@@ -208,7 +205,6 @@ const Signup: React.FC = () => {
         </div>
       </div>
 
-      {/* Image side */}
       <div className="hidden md:block w-full md:w-1/2 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-custom-orange/30 to-emerald-900/70 backdrop-blur-sm z-10" />
         <div
