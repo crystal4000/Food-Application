@@ -4,8 +4,11 @@ import AppStore from "../../assets/landing_page/appstore.svg";
 
 const Hero = () => {
   return (
-    <section className="relative">
-      <div className="backdrop-blur-md bg-white/5 border border-white/20 rounded-2xl shadow-lg mx-6 sm:mx-10 lg:mx-20 p-6 sm:p-10">
+    <section className="relative" style={{ zIndex: 1 }}>
+      <div
+        className="backdrop-blur-md bg-white/5 border border-white/20 rounded-2xl shadow-lg mx-6 sm:mx-10 lg:mx-20 p-6 sm:p-10"
+        style={{ zIndex: 1 }}
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 py-6 sm:py-8 lg:py-12 w-full">
           <div className="col-span-1 lg:col-span-8 order-2 lg:order-1 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl text-white font-medium leading-snug">

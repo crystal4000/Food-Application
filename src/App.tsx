@@ -8,6 +8,7 @@ import ResetPassword from "./pages/ResetPassword";
 import NewPassword from "./pages/NewPassword";
 import Favorites from "./pages/Favorites";
 import CategoryView from "./pages/CategoryView";
+import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import { useAuth } from "./hooks/useAuth";
 
@@ -32,8 +33,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/new-password" element={<NewPassword />} />
-
-        {/* Dashboard routes with layout - all routes are automatically protected */}
         <Route
           path="/dashboard"
           element={
@@ -46,6 +45,8 @@ function App() {
           <Route path="favorites" element={<Favorites />} />
           <Route path="category/:category" element={<CategoryView />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="top-right" richColors />
     </>

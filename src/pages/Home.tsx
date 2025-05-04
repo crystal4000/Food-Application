@@ -11,8 +11,9 @@ const Home = () => {
       <div className="absolute top-1/3 left-10 w-72 h-72 rounded-full bg-emerald-300/20 blur-3xl"></div>
       <div className="absolute bottom-40 left-1/4 w-80 h-80 rounded-full bg-teal-500/10 blur-3xl"></div>
 
-      <div className="relative z-10">
-        <Nav />
+      <Nav />
+
+      <div style={{ position: "relative", zIndex: 1 }}>
         <Hero />
         <Meals />
         <Notify />

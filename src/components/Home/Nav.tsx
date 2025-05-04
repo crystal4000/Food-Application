@@ -64,7 +64,10 @@ const Nav = () => {
       ];
 
   return (
-    <nav className="w-11/12 max-w-7xl mx-auto h-auto sm:h-20 px-6 sm:px-6 xl:px-0 py-4 sm:py-0 backdrop-blur-md bg-transparent mb-8">
+    <nav
+      className="w-11/12 max-w-7xl mx-auto h-auto sm:h-20 px-6 sm:px-6 xl:px-0 py-4 sm:py-0 backdrop-blur-md bg-transparent mb-8 relative"
+      style={{ zIndex: 9999 }}
+    >
       <div className="flex flex-col sm:flex-row justify-between items-center">
         <div className="w-full sm:w-auto flex justify-between items-center">
           <a href="/" className="flex justify-center items-center">
@@ -94,7 +97,11 @@ const Nav = () => {
           }`}
         >
           {user ? (
-            <div className="relative" ref={dropdownRef}>
+            <div
+              className="relative"
+              ref={dropdownRef}
+              style={{ zIndex: 9999 }}
+            >
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="flex items-center space-x-2 group"
@@ -110,16 +117,25 @@ const Nav = () => {
               </button>
 
               {showDropdown && (
-                <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg backdrop-blur-md bg-emerald-900/80">
+                <div
+                  className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg backdrop-blur-md bg-emerald-900/80"
+                  style={{ zIndex: 9999 }}
+                >
                   <div className="py-1">
-                    <a
-                      href="/dashboard"
-                      className="block px-4 py-3 text-white hover:bg-white/10 transition-all duration-200"
+                    <button
+                      onClick={() => {
+                        navigate("/dashboard");
+                        setShowDropdown(false);
+                      }}
+                      className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 transition-all duration-200"
                     >
                       Dashboard
-                    </a>
+                    </button>
                     <button
-                      onClick={handleLogout}
+                      onClick={() => {
+                        handleLogout();
+                        setShowDropdown(false);
+                      }}
                       className="block w-full text-left px-4 py-3 text-red-300 hover:bg-white/10 transition-all duration-200"
                     >
                       Logout
