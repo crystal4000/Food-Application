@@ -57,7 +57,7 @@ export const cocktailDbApi = createApi({
     // Get drinks by category
     getDrinksByCategory: builder.query<DrinksResponse, string>({
       query: (category) => `filter.php?c=${category}`,
-      providesTags: (result, error, category) => [
+      providesTags: (_result, _error, category) => [
         { type: "Drinks", id: category },
       ],
       // Transform the result to add prices (since API doesn't have prices)
