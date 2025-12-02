@@ -23,7 +23,7 @@ const Sidebar = ({
 }: {
   onToggleCollapse: (collapsed: boolean) => void;
 }) => {
-  const user = useAuth();
+  const { user } = useAuth();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

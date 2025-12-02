@@ -13,7 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Nav = () => {
   const [showLinks, setShowLinks] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const user = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +42,7 @@ const Nav = () => {
       toast.error("Error logging out" + error);
     }
   };
+  console.log("user in Nav", user);
 
   const links = user
     ? []

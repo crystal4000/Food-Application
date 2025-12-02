@@ -99,7 +99,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
             activeCategoryType === "food"
               ? "bg-white/80 text-emerald-900 shadow-md"
-              : "text-white/80 hover:bg-white/20"
+              : "text-emerald-700 hover:bg-white/20"
           }`}
         >
           <IoFastFoodOutline className="mr-2" />
@@ -110,7 +110,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
             activeCategoryType === "drink"
               ? "bg-white/80 text-emerald-900 shadow-md"
-              : "text-white/80 hover:bg-white/20"
+              : "text-emerald-700 hover:bg-white/20"
           }`}
         >
           <IoWineOutline className="mr-2" />

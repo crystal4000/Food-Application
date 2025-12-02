@@ -19,7 +19,7 @@ import { Meal } from "../types/mealDB.types";
 import { Drink } from "../services/cocktailDbApi";
 
 const Dashboard = () => {
-  const user = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

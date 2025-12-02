@@ -380,7 +380,7 @@ type SortOption = "name-asc" | "name-desc" | "price-asc" | "price-desc";
 const CategoryView = () => {
   const { category } = useParams<{ category: string }>();
   const location = useLocation();
-  const user = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -580,7 +580,7 @@ const CategoryView = () => {
             className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
               categoryType === "food"
                 ? "bg-white/80 text-emerald-900 shadow-md"
-                : "text-white/80 hover:bg-white/20"
+                : "text-emerald-700 hover:bg-white/20"
             }`}
           >
             <IoFastFoodOutline className="mr-2" />
@@ -591,7 +591,7 @@ const CategoryView = () => {
             className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 ${
               categoryType === "drink"
                 ? "bg-white/80 text-emerald-900 shadow-md"
-                : "text-white/80 hover:bg-white/20"
+                : "text-emerald-700 hover:bg-white/20"
             }`}
           >
             <IoWineOutline className="mr-2" />
