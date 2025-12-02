@@ -65,8 +65,8 @@ class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             <p className="my-8 text-emerald-800 max-w-md text-center">
-              {this.state.error?.message || "An unexpected error occurred"}
-            </p>
+              {"Error caught by boundary: " + this.state.error?.message || "An unexpected error occurred"}
+            </p>""
 
             <div className="flex justify-center gap-4">
               <button
