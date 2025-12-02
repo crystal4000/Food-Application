@@ -25,10 +25,12 @@ const Favorites = () => {
 
   // Fetch user favorites when component mounts and user is authenticated
   useEffect(() => {
-    if (user?.uid) {
-      dispatch(fetchUserFavorites(user.uid));
+    if (user?.user?.uid ?? "") {
+      dispatch(fetchUserFavorites(user.user?.uid ?? ""));
     }
-  }, [user, dispatch]);
+  }, [user?.user?.uid, dispatch]);
+
+  console.log(user?.user?.uid);
 
   // Convert Favorite to Meal for compatibility with FavoriteButton component
   const favoriteToMeal = (favorite: Favorite): Meal => ({
@@ -119,7 +121,7 @@ const Favorites = () => {
                     <div className="absolute top-4 right-4">
                       <FavoriteButton
                         meal={favoriteToMeal(favorite)}
-                        userId={user?.uid}
+                        userId={user?.user?.uid ?? undefined}
                         size={22}
                       />
                     </div>
