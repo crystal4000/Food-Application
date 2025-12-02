@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
+import { useSessionTimeout } from "../../hooks/useSessionTimeout";
 
 const DashboardLayout = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
@@ -15,6 +16,12 @@ const DashboardLayout = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useSessionTimeout({
+    timeoutMinutes: 30,    
+    warningMinutes: 5,     
+    enabled: true,         
+  });
 
   // Function to be passed to Sidebar component to update collapsed state
   const handleSidebarToggle = (collapsed: boolean) => {
