@@ -11,6 +11,7 @@ import CategoryView from "./pages/CategoryView";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import { useAuth } from "./hooks/useAuth";
+import Cart from "./pages/Cart";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -51,6 +52,7 @@ function App() {
         >
           <Route index element={<Dashboard />} />
           <Route path="favorites" element={<Favorites />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="category/:category" element={<CategoryView />} />
         </Route>
 

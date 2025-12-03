@@ -6,16 +6,28 @@ import logo from "../../assets/landing_page/logo.svg";
 import { HiMenu } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { toast } from "sonner";
 import { getInitials } from "../../utils/functions";
 import { useAuth } from "../../hooks/useAuth";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchUserCart } from "../../store/cartSlice";
 
 const Nav = () => {
   const [showLinks, setShowLinks] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { user } = useAuth();
+  const dispatch = useAppDispatch();
+  const { items: cartItems } = useAppSelector((state) => state.cart);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Fetch cart items when user is available
+  useEffect(() => {
+    if (user?.uid) {
+      dispatch(fetchUserCart(user.uid));
+    }
+  }, [user?.uid, dispatch]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -98,52 +110,67 @@ const Nav = () => {
           }`}
         >
           {user ? (
-            <div
-              className="relative"
-              ref={dropdownRef}
-              style={{ zIndex: 9999 }}
-            >
+            <div className="flex items-center space-x-4">
+              {/* Cart Icon with Badge */}
               <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center space-x-2 group"
+                onClick={() => navigate("/dashboard/cart")}
+                className="relative p-2 rounded-full backdrop-blur-sm bg-white/20 border border-white/30 hover:bg-white/30 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-custom-orange to-amber-500 text-emerald-900 text-lg font-semibold flex items-center justify-center shadow-md">
-                  {getInitials(user.displayName || "User Name")}
-                </div>
-                <IoMdArrowDropdown
-                  className={`text-custom-orange text-xl transition-transform duration-200 ${
-                    showDropdown ? "rotate-180" : ""
-                  }`}
-                />
+                <AiOutlineShoppingCart className="w-6 h-6 text-custom-orange" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                    {cartItems.length > 99 ? "99+" : cartItems.length}
+                  </span>
+                )}
               </button>
 
-              {showDropdown && (
-                <div
-                  className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg backdrop-blur-md bg-emerald-900/80"
-                  style={{ zIndex: 9999 }}
+              <div
+                className="relative"
+                ref={dropdownRef}
+                style={{ zIndex: 9999 }}
+              >
+                <button
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className="flex items-center space-x-2 group"
                 >
-                  <div className="py-1">
-                    <button
-                      onClick={() => {
-                        navigate("/dashboard");
-                        setShowDropdown(false);
-                      }}
-                      className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 transition-all duration-200"
-                    >
-                      Dashboard
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setShowDropdown(false);
-                      }}
-                      className="block w-full text-left px-4 py-3 text-red-300 hover:bg-white/10 transition-all duration-200"
-                    >
-                      Logout
-                    </button>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-custom-orange to-amber-500 text-emerald-900 text-lg font-semibold flex items-center justify-center shadow-md">
+                    {getInitials(user.displayName || "User Name")}
                   </div>
-                </div>
-              )}
+                  <IoMdArrowDropdown
+                    className={`text-custom-orange text-xl transition-transform duration-200 ${
+                      showDropdown ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {showDropdown && (
+                  <div
+                    className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg backdrop-blur-md bg-emerald-900/80"
+                    style={{ zIndex: 9999 }}
+                  >
+                    <div className="py-1">
+                      <button
+                        onClick={() => {
+                          navigate("/dashboard");
+                          setShowDropdown(false);
+                        }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 transition-all duration-200"
+                      >
+                        Dashboard
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setShowDropdown(false);
+                        }}
+                        className="block w-full text-left px-4 py-3 text-red-300 hover:bg-white/10 transition-all duration-200"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <ul className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-14">

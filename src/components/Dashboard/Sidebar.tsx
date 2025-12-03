@@ -17,6 +17,8 @@ import logo from "../../assets/landing_page/logo.svg";
 import { getInitials } from "../../utils/functions";
 import { BiBell, BiSearch, BiMenu } from "react-icons/bi";
 import { useAuth } from "../../hooks/useAuth";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchUserCart } from "../../store/cartSlice";
 
 const Sidebar = ({
   onToggleCollapse,
@@ -24,10 +26,19 @@ const Sidebar = ({
   onToggleCollapse: (collapsed: boolean) => void;
 }) => {
   const { user } = useAuth();
+  const dispatch = useAppDispatch();
+  const { items: cartItems } = useAppSelector((state) => state.cart);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+
+  // Fetch cart items when user is available
+  useEffect(() => {
+    if (user?.uid) {
+      dispatch(fetchUserCart(user.uid));
+    }
+  }, [user?.uid, dispatch]);
 
   // Listen for window resize events
   useEffect(() => {
@@ -154,6 +165,19 @@ const Sidebar = ({
                 <BiBell className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-800" />
               </div>
 
+              {/* Cart Icon with Badge */}
+              <button
+                onClick={() => navigate("/dashboard/cart")}
+                className="relative p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/40 border border-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer"
+              >
+                <AiOutlineShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-800" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                    {cartItems.length > 99 ? "99+" : cartItems.length}
+                  </span>
+                )}
+              </button>
+
               {/* User Avatar */}
               <div className="relative">
                 <button
@@ -194,36 +218,52 @@ const Sidebar = ({
           <div className="absolute bottom-40 left-5 w-40 h-40 bg-emerald-300/20 rounded-full blur-xl -z-10"></div>
 
           <ul className="space-y-2 sm:space-y-3 flex-1 relative z-10">
-            {menuItems.map((item) => (
-              <li key={item.id}>
-                <NavLink
-                  to={item.path}
-                  end={item.exact}
-                  className={({ isActive }) => `
-                    flex items-center p-2 sm:p-3 text-emerald-800 rounded-lg transition-all duration-300
-                    ${
-                      isActive
-                        ? "bg-gradient-to-r from-emerald-500/80 to-teal-600/80 text-white backdrop-blur-sm shadow-md"
-                        : "hover:bg-white/50 backdrop-blur-sm"
-                    }
-                    ${isCollapsed ? "justify-center" : ""}
-                  `}
-                >
-                  {({ isActive }) => (
-                    <>
-                      <item.icon
-                        className={`w-5 h-5 ${isActive ? "text-white" : ""}`}
-                      />
-                      {!isCollapsed && (
-                        <span className="ms-3 font-medium whitespace-nowrap overflow-hidden">
-                          {item.name}
-                        </span>
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              </li>
-            ))}
+            {menuItems.map((item) => {
+              const isCartItem = item.id === 3; // Cart item
+              return (
+                <li key={item.id}>
+                  <NavLink
+                    to={item.path}
+                    end={item.exact}
+                    className={({ isActive }) => `
+                      flex items-center p-2 sm:p-3 text-emerald-800 rounded-lg transition-all duration-300 relative
+                      ${
+                        isActive
+                          ? "bg-gradient-to-r from-emerald-500/80 to-teal-600/80 text-white backdrop-blur-sm shadow-md"
+                          : "hover:bg-white/50 backdrop-blur-sm"
+                      }
+                      ${isCollapsed ? "justify-center" : ""}
+                    `}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <div className="relative">
+                          <item.icon
+                            className={`w-5 h-5 ${
+                              isActive ? "text-white" : ""
+                            }`}
+                          />
+                          {isCartItem && cartItems.length > 0 && (
+                            <span
+                              className={`absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center border-2 ${
+                                isActive ? "border-white" : "border-white"
+                              }`}
+                            >
+                              {cartItems.length > 9 ? "9+" : cartItems.length}
+                            </span>
+                          )}
+                        </div>
+                        {!isCollapsed && (
+                          <span className="ms-3 font-medium whitespace-nowrap overflow-hidden flex-1">
+                            {item.name}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-auto space-y-2 sm:space-y-3 border-t border-white/30 pt-3 sm:pt-4 relative z-10">

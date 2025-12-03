@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query/react";
 import { mealdbApi } from "../services/mealDbApi";
 import { cocktailDbApi, Drink } from "../services/cocktailDbApi";
 import favoritesReducer from "./favoritesSlice";
-// Optional: Create a food dashboard slice for local state management
+import cartReducer from "./cartSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Meal } from "../types/mealDB.types";
 
@@ -62,6 +62,7 @@ export const store = configureStore({
     [cocktailDbApi.reducerPath]: cocktailDbApi.reducer,
     foodDashboard: foodDashboardSlice.reducer,
     favorites: favoritesReducer,
+    cart: cartReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling, and other features
   middleware: (getDefaultMiddleware) =>

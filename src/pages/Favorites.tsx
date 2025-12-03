@@ -7,7 +7,7 @@ import { IoMdAdd } from "react-icons/io";
 import FavoriteButton from "../components/Dashboard/FavoriteButton";
 
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { addToCart } from "../store/store";
+import { addToCart } from "../store/cartSlice";
 import { fetchUserFavorites } from "../store/favoritesSlice";
 import { Favorite } from "../services/favoritesService";
 import { Meal } from "../types/mealDB.types";
@@ -40,10 +40,11 @@ const Favorites = () => {
     price: favorite.price,
   });
 
-  const handleAddToCart = (favorite: Favorite) => {
-    const meal = favoriteToMeal(favorite);
-    dispatch(addToCart(meal));
-    // Show toast notification
+  const handleAddToCart = async (favorite: Favorite) => {
+    if (user?.user?.uid) {
+      const meal = favoriteToMeal(favorite);
+      await dispatch(addToCart({ userId: user.user.uid, meal: meal as Meal }));
+    }
   };
 
   return (

@@ -13,7 +13,7 @@ import { useGetDrinksByCategoryQuery } from "../services/cocktailDbApi";
 
 // Import Redux hooks
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { addToCart } from "../store/store";
+import { addToCart } from "../store/cartSlice";
 import { fetchUserFavorites } from "../store/favoritesSlice";
 import { Meal } from "../types/mealDB.types";
 import { Drink } from "../services/cocktailDbApi";
@@ -59,9 +59,10 @@ const Dashboard = () => {
   }, [user, dispatch]);
 
   // Handle add to cart for both food and drinks
-  const handleAddToCart = (item: Meal | Drink) => {
-    dispatch(addToCart(item));
-    // You could show a toast notification here
+  const handleAddToCart = async (meal: Meal | Drink) => {
+    if (user?.uid) {
+      await dispatch(addToCart({ userId: user.uid, meal }));
+    }
   };
 
   // Handle view all click - navigate to category page with type information
