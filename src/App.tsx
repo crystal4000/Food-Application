@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import { useAuth } from "./hooks/useAuth";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -54,6 +56,8 @@ function App() {
           <Route path="favorites" element={<Favorites />} />
           <Route path="cart" element={<Cart />} />
           <Route path="category/:category" element={<CategoryView />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="order-success/:orderId" element={<OrderSuccess />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
