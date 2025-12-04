@@ -14,7 +14,12 @@ import {
   AddressFormData,
   CardFormData,
 } from "../types/checkout.types";
-import { addressSchema, cardSchema } from "../utils/checkoutValidation";
+import {
+  addressSchema,
+  cardSchema,
+  formatPhoneForDisplay,
+} from "../utils/checkoutValidation";
+import { getStateName } from "../utils/usStates";
 import {
   HiChevronLeft,
   HiChevronRight,
@@ -30,6 +35,7 @@ import {
 } from "react-icons/fa";
 import BackButton from "../components/Dashboard/BackButton";
 import OrderSuccessModal from "../components/OrderSuccessModal";
+import { PhoneInput, StateSelect, FullNameInput } from "../components/Checkout";
 import { toast } from "sonner";
 import { Order } from "../types/checkout.types";
 
@@ -67,14 +73,23 @@ const Checkout = () => {
   // Forms
   const addressForm = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
+    defaultValues: {
+      isDefault: false,
+    },
   });
 
   const cardForm = useForm<CardFormData>({
     resolver: zodResolver(cardSchema),
+    defaultValues: {
+      isDefault: false,
+    },
   });
 
   const billingForm = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
+    defaultValues: {
+      isDefault: false,
+    },
   });
 
   const loadAddresses = useCallback(async () => {
@@ -328,14 +343,15 @@ const Checkout = () => {
                           {address.fullName}
                         </p>
                         <p className="text-sm text-emerald-700">
-                          {address.phoneNumber}
+                          +1 {formatPhoneForDisplay(address.phoneNumber)}
                         </p>
                         <p className="text-sm text-emerald-700 mt-1">
                           {address.addressLine1}
                           {address.addressLine2 && `, ${address.addressLine2}`}
                         </p>
                         <p className="text-sm text-emerald-700">
-                          {address.city}, {address.state} {address.zipCode}
+                          {address.city}, {getStateName(address.state)}{" "}
+                          {address.zipCode}
                         </p>
                       </div>
                       {address.isDefault && (
@@ -365,37 +381,22 @@ const Checkout = () => {
                   className="space-y-4 mt-4 p-4 bg-white/10 rounded-lg"
                 >
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <input
-                        {...addressForm.register("fullName")}
-                        placeholder="Full Name"
-                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                      />
-                      {addressForm.formState.errors.fullName && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {addressForm.formState.errors.fullName.message}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <input
-                        {...addressForm.register("phoneNumber")}
-                        placeholder="Phone Number"
-                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                      />
-                      {addressForm.formState.errors.phoneNumber && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {addressForm.formState.errors.phoneNumber.message}
-                        </p>
-                      )}
-                    </div>
+                    <FullNameInput
+                      register={addressForm.register}
+                      errors={addressForm.formState.errors}
+                    />
+                    <PhoneInput
+                      register={addressForm.register}
+                      setValue={addressForm.setValue}
+                      errors={addressForm.formState.errors}
+                    />
                   </div>
 
                   <div>
                     <input
                       {...addressForm.register("addressLine1")}
                       placeholder="Address Line 1"
-                      className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                      className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                     />
                     {addressForm.formState.errors.addressLine1 && (
                       <p className="text-red-500 text-sm mt-1">
@@ -408,7 +409,7 @@ const Checkout = () => {
                     <input
                       {...addressForm.register("addressLine2")}
                       placeholder="Address Line 2 (Optional)"
-                      className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                      className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                     />
                   </div>
 
@@ -417,7 +418,7 @@ const Checkout = () => {
                       <input
                         {...addressForm.register("city")}
                         placeholder="City"
-                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                       />
                       {addressForm.formState.errors.city && (
                         <p className="text-red-500 text-sm mt-1">
@@ -425,23 +426,15 @@ const Checkout = () => {
                         </p>
                       )}
                     </div>
-                    <div>
-                      <input
-                        {...addressForm.register("state")}
-                        placeholder="State"
-                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                      />
-                      {addressForm.formState.errors.state && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {addressForm.formState.errors.state.message}
-                        </p>
-                      )}
-                    </div>
+                    <StateSelect
+                      register={addressForm.register}
+                      errors={addressForm.formState.errors}
+                    />
                     <div>
                       <input
                         {...addressForm.register("zipCode")}
                         placeholder="ZIP Code"
-                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                        className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                       />
                       {addressForm.formState.errors.zipCode && (
                         <p className="text-red-500 text-sm mt-1">
@@ -517,7 +510,7 @@ const Checkout = () => {
                         : "border-white/30 hover:border-white/50"
                     }`}
                   >
-                    <span className="text-2xl mb-2 block">💵</span>
+                    <span className="text-2xl block mb-2">💵</span>
                     <p className="text-sm font-semibold text-emerald-900">
                       Cash
                     </p>
@@ -530,7 +523,7 @@ const Checkout = () => {
                         : "border-white/30 hover:border-white/50"
                     }`}
                   >
-                    <span className="text-2xl mb-2 block">📱</span>
+                    <span className="text-2xl block mb-2">📱</span>
                     <p className="text-sm font-semibold text-emerald-900">
                       Mobile
                     </p>
@@ -538,10 +531,9 @@ const Checkout = () => {
                 </div>
               </div>
 
-              {/* Card Selection (if payment method is card) */}
+              {/* Card Selection (only shown if card payment) */}
               {paymentMethod === "card" && (
                 <>
-                  {/* Card List */}
                   <div className="space-y-3 mb-4">
                     {cards.map((card) => (
                       <div
@@ -553,23 +545,19 @@ const Checkout = () => {
                             : "border-white/30 hover:border-white/50"
                         }`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            {getCardIcon(card.cardType)}
-                            <div>
-                              <p className="font-semibold text-emerald-900">
-                                •••• •••• •••• {card.cardNumber}
-                              </p>
-                              <p className="text-sm text-emerald-700">
-                                {card.cardHolderName}
-                              </p>
-                              <p className="text-xs text-emerald-700">
-                                Expires {card.expiryMonth}/{card.expiryYear}
-                              </p>
-                            </div>
+                        <div className="flex items-center gap-3">
+                          {getCardIcon(card.cardType)}
+                          <div>
+                            <p className="font-semibold text-emerald-900">
+                              •••• •••• •••• {card.cardNumber}
+                            </p>
+                            <p className="text-sm text-emerald-700">
+                              {card.cardHolderName} | Expires{" "}
+                              {card.expiryMonth}/{card.expiryYear}
+                            </p>
                           </div>
                           {card.isDefault && (
-                            <span className="text-xs bg-custom-orange text-emerald-900 px-2 py-1 rounded">
+                            <span className="ml-auto text-xs bg-custom-orange text-emerald-900 px-2 py-1 rounded">
                               Default
                             </span>
                           )}
@@ -598,7 +586,8 @@ const Checkout = () => {
                         <input
                           {...cardForm.register("cardNumber")}
                           placeholder="Card Number"
-                          className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                          maxLength={19}
+                          className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                         />
                         {cardForm.formState.errors.cardNumber && (
                           <p className="text-red-500 text-sm mt-1">
@@ -606,12 +595,11 @@ const Checkout = () => {
                           </p>
                         )}
                       </div>
-
                       <div>
                         <input
                           {...cardForm.register("cardHolderName")}
-                          placeholder="Card Holder Name"
-                          className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                          placeholder="Cardholder Name"
+                          className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                         />
                         {cardForm.formState.errors.cardHolderName && (
                           <p className="text-red-500 text-sm mt-1">
@@ -619,13 +607,13 @@ const Checkout = () => {
                           </p>
                         )}
                       </div>
-
                       <div className="grid grid-cols-3 gap-4">
                         <div>
                           <input
                             {...cardForm.register("expiryMonth")}
                             placeholder="MM"
-                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                            maxLength={2}
+                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                           />
                           {cardForm.formState.errors.expiryMonth && (
                             <p className="text-red-500 text-sm mt-1">
@@ -636,8 +624,9 @@ const Checkout = () => {
                         <div>
                           <input
                             {...cardForm.register("expiryYear")}
-                            placeholder="YYYY"
-                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                            placeholder="YY"
+                            maxLength={2}
+                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                           />
                           {cardForm.formState.errors.expiryYear && (
                             <p className="text-red-500 text-sm mt-1">
@@ -649,8 +638,9 @@ const Checkout = () => {
                           <input
                             {...cardForm.register("cvv")}
                             placeholder="CVV"
+                            maxLength={4}
                             type="password"
-                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                           />
                           {cardForm.formState.errors.cvv && (
                             <p className="text-red-500 text-sm mt-1">
@@ -692,7 +682,7 @@ const Checkout = () => {
                     </form>
                   )}
 
-                  {/* Billing Address Section */}
+                  {/* Billing Address */}
                   <div className="mt-6">
                     <div className="flex items-center gap-2 mb-4">
                       <input
@@ -725,43 +715,22 @@ const Checkout = () => {
                             className="space-y-4 p-4 bg-white/10 rounded-lg"
                           >
                             <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <input
-                                  {...billingForm.register("fullName")}
-                                  placeholder="Full Name"
-                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                                />
-                                {billingForm.formState.errors.fullName && (
-                                  <p className="text-red-500 text-sm mt-1">
-                                    {
-                                      billingForm.formState.errors.fullName
-                                        .message
-                                    }
-                                  </p>
-                                )}
-                              </div>
-                              <div>
-                                <input
-                                  {...billingForm.register("phoneNumber")}
-                                  placeholder="Phone Number"
-                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                                />
-                                {billingForm.formState.errors.phoneNumber && (
-                                  <p className="text-red-500 text-sm mt-1">
-                                    {
-                                      billingForm.formState.errors.phoneNumber
-                                        .message
-                                    }
-                                  </p>
-                                )}
-                              </div>
+                              <FullNameInput
+                                register={billingForm.register}
+                                errors={billingForm.formState.errors}
+                              />
+                              <PhoneInput
+                                register={billingForm.register}
+                                setValue={billingForm.setValue}
+                                errors={billingForm.formState.errors}
+                              />
                             </div>
 
                             <div>
                               <input
                                 {...billingForm.register("addressLine1")}
                                 placeholder="Address Line 1"
-                                className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                                className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                               />
                               {billingForm.formState.errors.addressLine1 && (
                                 <p className="text-red-500 text-sm mt-1">
@@ -777,7 +746,7 @@ const Checkout = () => {
                               <input
                                 {...billingForm.register("addressLine2")}
                                 placeholder="Address Line 2 (Optional)"
-                                className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                                className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                               />
                             </div>
 
@@ -786,7 +755,7 @@ const Checkout = () => {
                                 <input
                                   {...billingForm.register("city")}
                                   placeholder="City"
-                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                                 />
                                 {billingForm.formState.errors.city && (
                                   <p className="text-red-500 text-sm mt-1">
@@ -794,23 +763,15 @@ const Checkout = () => {
                                   </p>
                                 )}
                               </div>
-                              <div>
-                                <input
-                                  {...billingForm.register("state")}
-                                  placeholder="State"
-                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
-                                />
-                                {billingForm.formState.errors.state && (
-                                  <p className="text-red-500 text-sm mt-1">
-                                    {billingForm.formState.errors.state.message}
-                                  </p>
-                                )}
-                              </div>
+                              <StateSelect
+                                register={billingForm.register}
+                                errors={billingForm.formState.errors}
+                              />
                               <div>
                                 <input
                                   {...billingForm.register("zipCode")}
                                   placeholder="ZIP Code"
-                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700"
+                                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-emerald-900 placeholder-emerald-700/50"
                                 />
                                 {billingForm.formState.errors.zipCode && (
                                   <p className="text-red-500 text-sm mt-1">
@@ -874,11 +835,13 @@ const Checkout = () => {
                       `, ${selectedAddress.addressLine2}`}
                   </p>
                   <p className="text-sm text-emerald-700">
-                    {selectedAddress?.city}, {selectedAddress?.state}{" "}
+                    {selectedAddress?.city},{" "}
+                    {getStateName(selectedAddress?.state || "")}{" "}
                     {selectedAddress?.zipCode}
                   </p>
                   <p className="text-sm text-emerald-700 mt-1">
-                    {selectedAddress?.phoneNumber}
+                    +1{" "}
+                    {formatPhoneForDisplay(selectedAddress?.phoneNumber || "")}
                   </p>
                 </div>
               </div>
@@ -927,8 +890,8 @@ const Checkout = () => {
                         `, ${billingAddress.addressLine2}`}
                     </p>
                     <p className="text-sm text-emerald-700">
-                      {billingAddress.city}, {billingAddress.state}{" "}
-                      {billingAddress.zipCode}
+                      {billingAddress.city},{" "}
+                      {getStateName(billingAddress.state)} {billingAddress.zipCode}
                     </p>
                   </div>
                 </div>
