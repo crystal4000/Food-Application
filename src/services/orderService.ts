@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   Timestamp,
   FirestoreError,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { Order } from "../types/checkout.types";
@@ -87,7 +88,9 @@ export const createOrder = async (
       deliveryAddress: orderData.deliveryAddress,
       billingAddress: orderData.billingAddress,
       paymentMethod: orderData.paymentMethod,
-      paymentCard: orderData.paymentCard,
+      ...(orderData.paymentCard && {
+        paymentCard: orderData.paymentCard,
+      }),
       subtotal: orderData.subtotal,
       tax: orderData.tax,
       deliveryFee: orderData.deliveryFee,
@@ -212,6 +215,25 @@ export const getOrderById = async (
     } else {
       toast.error("Failed to load order");
     }
+    throw error;
+  }
+};
+
+/**
+ * Update order status
+ */
+export const updateOrderStatus = async (
+  orderId: string,
+  status: Order["status"]
+): Promise<void> => {
+  try {
+    await updateDoc(doc(ordersRef, orderId), { status });
+    toast.success(
+      status === "cancelled" ? "Order cancelled" : "Order status updated"
+    );
+  } catch (error) {
+    console.error("Error updating order:", error);
+    toast.error("Failed to update order");
     throw error;
   }
 };

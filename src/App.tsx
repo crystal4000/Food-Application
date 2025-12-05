@@ -14,6 +14,7 @@ import { useAuth } from "./hooks/useAuth";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import Orders from "./pages/Orders";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -55,6 +56,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="category/:category" element={<CategoryView />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="order-success/:orderId" element={<OrderSuccess />} />
