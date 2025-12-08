@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { confirmPasswordReset, AuthError } from "firebase/auth";
+import {
+  confirmPasswordReset,
+  AuthError,
+  verifyPasswordResetCode,
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { NewPasswordFormValues, newPasswordSchema } from "../utils/schema";
 import { toast } from "sonner";
@@ -16,6 +20,10 @@ const NewPassword: React.FC = () => {
   const [passwordShown, setPasswordShown] = React.useState<boolean>(false);
   const [confirmPasswordShown, setConfirmPasswordShown] =
     React.useState<boolean>(false);
+
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [isValidCode, setIsValidCode] = useState<boolean>(true);
 
   const oobCode = searchParams.get("oobCode");
 
@@ -31,34 +39,75 @@ const NewPassword: React.FC = () => {
     },
   });
 
-  const onSubmit = async (data: NewPasswordFormValues): Promise<void> => {
+  useEffect(() => {
     if (!oobCode) {
-      toast.error("Invalid password reset link");
+      setIsValidCode(false);
+      toast.error("Invalid or missing reset code");
       return;
     }
 
+    // Verify the password reset code
+    verifyPasswordResetCode(auth, oobCode)
+      .then((emailAddress) => {
+        setEmail(emailAddress);
+        setIsValidCode(true);
+      })
+      .catch((error) => {
+        console.error("Error verifying reset code:", error);
+        setIsValidCode(false);
+
+        if (error.code === "auth/invalid-action-code") {
+          toast.error("This reset link has expired or has already been used");
+        } else if (error.code === "auth/expired-action-code") {
+          toast.error("This reset link has expired. Please request a new one");
+        } else {
+          toast.error("Invalid reset link");
+        }
+      });
+  }, [oobCode]);
+
+  const onSubmit = async (data: NewPasswordFormValues): Promise<void> => {
+    if (!oobCode) {
+      toast.error("Invalid reset code");
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       await confirmPasswordReset(auth, oobCode, data.password);
-      toast.success("Password reset successful!");
-      window.setTimeout(() => {
+      toast.success("Password reset successful! You can now login.");
+
+      setTimeout(() => {
         navigate("/login");
-      }, 3000);
+      }, 2000);
     } catch (error: unknown) {
       const firebaseError = error as AuthError;
-      toast.error(firebaseError.message || "Failed to reset password");
+      console.error("Password reset error:", firebaseError);
+
+      if (firebaseError.code === "auth/invalid-action-code") {
+        toast.error("This reset link has expired or has already been used");
+      } else if (firebaseError.code === "auth/weak-password") {
+        toast.error("Password should be at least 6 characters");
+      } else {
+        toast.error(
+          firebaseError.message || "Failed to reset password. Please try again."
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/reset-password");
   };
 
-  if (!oobCode) {
+  if (!isValidCode) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-teal-700 to-emerald-900">
         <div className="p-4 sm:p-8 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl max-w-sm sm:max-w-md mx-4">
           <h1 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 text-center">
-            Invalid Reset Link
+            Invalid Link
           </h1>
           <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6 text-center">
             The password reset link is invalid or has expired.
@@ -94,6 +143,11 @@ const NewPassword: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 text-center text-white">
             Set New Password
           </h1>
+          {email && (
+            <p className="text-center text-white/70 text-sm mb-6">
+              For {email}
+            </p>
+          )}
 
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -161,9 +215,10 @@ const NewPassword: React.FC = () => {
 
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full py-2 sm:py-3 px-4 bg-gradient-to-r from-custom-orange to-amber-500 hover:from-custom-orange-hover hover:to-amber-600 text-emerald-900 font-bold rounded-full transition duration-300 shadow-lg text-sm sm:text-base"
             >
-              Reset Password
+              {isSubmitting ? "Resetting..." : "Reset Password"}
             </button>
           </form>
         </div>

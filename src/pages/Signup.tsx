@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
+  sendEmailVerification,
   AuthError,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -33,32 +34,55 @@ const Signup: React.FC = () => {
   });
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const togglePassword = (): void => {
     setPasswordShown((prev) => !prev);
   };
 
   const onSubmit = async (data: SignupFormValues): Promise<void> => {
+    setIsSubmitting(true);
     try {
+      // Create user
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
 
+      // Update profile with name
       if (userCredential.user) {
         await updateProfile(userCredential.user, {
           displayName: data.name,
         });
+
+        // Send verification email
+        await sendEmailVerification(userCredential.user);
       }
 
-      toast.success("Signup Successful!");
-      window.setTimeout(() => {
+      toast.success(
+        "Account created! Please check your email to verify your account."
+      );
+
+      // Sign out user until they verify
+      await auth.signOut();
+
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
         navigate("/login");
       }, 3000);
     } catch (error: unknown) {
       const firebaseError = error as AuthError;
-      toast.error(firebaseError.message || "An error occurred during signup");
+
+      if (firebaseError.code === "auth/email-already-in-use") {
+        toast.error("This email is already registered. Please login.");
+      } else if (firebaseError.code === "auth/weak-password") {
+        toast.error("Password should be at least 6 characters");
+      } else {
+        toast.error(firebaseError.message || "An error occurred during signup");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,13 +106,14 @@ const Signup: React.FC = () => {
 
         <div className="w-full max-w-sm sm:max-w-md px-4 sm:px-6 py-6 sm:py-8 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-xl">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 text-center text-white">
-            Let's Make Your Order
+            Create Account
           </h1>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-4 sm:space-y-6 md:space-y-8"
           >
+            {/* Name Input */}
             <div className="relative">
               <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
                 <span className="text-white/90 mr-2">
@@ -97,17 +122,18 @@ const Signup: React.FC = () => {
                 <input
                   {...register("name")}
                   type="text"
-                  placeholder="Sara Tancredi"
+                  placeholder="Full Name"
                   className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
               </div>
               {errors.name && (
-                <p className="text-xs text-red-300 mt-1">
+                <p className="text-red-400 text-xs sm:text-sm mt-1">
                   {errors.name.message}
                 </p>
               )}
             </div>
 
+            {/* Email Input */}
             <div className="relative">
               <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
                 <span className="text-white/90 mr-2">
@@ -116,17 +142,18 @@ const Signup: React.FC = () => {
                 <input
                   {...register("email")}
                   type="email"
-                  placeholder="Sara.Tancredi@gmail.com"
+                  placeholder="Email"
                   className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-red-300 mt-1">
+                <p className="text-red-400 text-xs sm:text-sm mt-1">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
+            {/* Password Input */}
             <div className="relative">
               <div className="flex items-center border-b-2 border-custom-orange py-2 focus-within:border-white/80 transition-colors duration-200">
                 <span className="text-white/90 mr-2">
@@ -139,8 +166,8 @@ const Signup: React.FC = () => {
                   className="appearance-none bg-transparent border-none w-full text-white text-sm sm:text-base mr-3 py-1 px-1 sm:px-2 leading-tight focus:outline-none placeholder-white/50"
                 />
                 <button
-                  onClick={togglePassword}
                   type="button"
+                  onClick={togglePassword}
                   className="text-white/90"
                 >
                   {passwordShown ? (
@@ -151,69 +178,66 @@ const Signup: React.FC = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-300 mt-1">
+                <p className="text-red-400 text-xs sm:text-sm mt-1">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 sm:py-3 px-4 bg-gradient-to-r from-custom-orange to-amber-500 hover:from-custom-orange-hover hover:to-amber-600 text-emerald-900 font-bold rounded-full transition duration-300 shadow-lg text-sm sm:text-base"
+              disabled={isSubmitting}
+              className="w-full py-2 sm:py-3 bg-gradient-to-r from-custom-orange to-amber-500 hover:from-amber-500 hover:to-custom-orange text-emerald-900 font-semibold rounded-full transition duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
             >
-              Sign up
+              {isSubmitting ? "Creating Account..." : "Sign Up"}
             </button>
           </form>
 
-          <div className="mt-4 sm:mt-6 md:mt-8 text-center">
-            <p className="text-xs sm:text-sm text-white/90">
-              Already have an account?{" "}
-              <span
-                onClick={() => navigate("/login")}
-                className="font-medium text-custom-orange hover:text-amber-400 cursor-pointer hover:underline transition-colors duration-200"
-              >
-                Log in
-              </span>
-            </p>
+          {/* Divider */}
+          <div className="flex items-center my-4 sm:my-6">
+            <div className="flex-1 border-t border-white/30"></div>
+            <span className="px-3 sm:px-4 text-white/70 text-xs sm:text-sm">
+              or continue with
+            </span>
+            <div className="flex-1 border-t border-white/30"></div>
           </div>
 
-          <div className="mt-4 sm:mt-6 md:mt-8">
-            <div className="flex items-center justify-center space-x-3 sm:space-x-4">
-              <p className="text-xs sm:text-sm font-medium text-white/90">
-                Follow us
-              </p>
-              <a
-                href="#"
-                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
-              >
-                <FaTwitter className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
-              </a>
-              <a
-                href="#"
-                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
-              >
-                <FaInstagram className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
-              </a>
-              <a
-                href="#"
-                className="p-1.5 sm:p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300"
-              >
-                <FaGoogle className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
-              </a>
-            </div>
+          {/* Social Login Buttons */}
+          <div className="flex justify-center gap-3 sm:gap-4">
+            <button className="p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition duration-300">
+              <FaGoogle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </button>
+            <button className="p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition duration-300">
+              <FaTwitter className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </button>
+            <button className="p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition duration-300">
+              <FaInstagram className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            </button>
           </div>
+
+          {/* Login Link */}
+          <p className="text-center mt-4 sm:mt-6 text-white/80 text-xs sm:text-sm">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-custom-orange hover:text-amber-400 font-semibold transition-colors"
+            >
+              Login
+            </a>
+          </p>
         </div>
       </div>
 
-      <div className="hidden md:block w-full md:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-custom-orange/30 to-emerald-900/70 backdrop-blur-sm z-10" />
-        <div
-          className="h-full w-full bg-center bg-cover"
-          style={{
-            backgroundImage: `url(${foodImage})`,
-            backgroundPosition: "center center",
-          }}
-        />
+      {/* Right Side - Image */}
+      <div className="hidden md:flex md:w-1/2 items-center justify-center p-8 relative z-10">
+        <div className="max-w-lg">
+          <img
+            src={foodImage}
+            alt="Food illustration"
+            className="w-full h-auto drop-shadow-2xl"
+          />
+        </div>
       </div>
     </div>
   );

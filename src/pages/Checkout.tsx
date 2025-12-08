@@ -141,6 +141,13 @@ const Checkout = () => {
     }
   }, [cartItems, navigate, showSuccessModal, isProcessing, orderPlaced]);
 
+  useEffect(() => {
+    if (user && !user.emailVerified) {
+      toast.error("Please verify your email before placing an order");
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
   // Calculate totals
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -552,8 +559,8 @@ const Checkout = () => {
                               •••• •••• •••• {card.cardNumber}
                             </p>
                             <p className="text-sm text-emerald-700">
-                              {card.cardHolderName} | Expires{" "}
-                              {card.expiryMonth}/{card.expiryYear}
+                              {card.cardHolderName} | Expires {card.expiryMonth}
+                              /{card.expiryYear}
                             </p>
                           </div>
                           {card.isDefault && (
@@ -891,7 +898,8 @@ const Checkout = () => {
                     </p>
                     <p className="text-sm text-emerald-700">
                       {billingAddress.city},{" "}
-                      {getStateName(billingAddress.state)} {billingAddress.zipCode}
+                      {getStateName(billingAddress.state)}{" "}
+                      {billingAddress.zipCode}
                     </p>
                   </div>
                 </div>

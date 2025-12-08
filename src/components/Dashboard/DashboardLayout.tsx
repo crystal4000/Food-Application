@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import { useSessionTimeout } from "../../hooks/useSessionTimeout";
+import EmailVerificationPrompt from "../EmailVerificationPrompt";
+import { useAuth } from "../../hooks/useAuth";
 
 const DashboardLayout = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-
+  const [showVerificationPrompt, setShowVerificationPrompt] =
+    useState<boolean>(false);
+  const { user } = useAuth();
   // Listen for window resize events
   useEffect(() => {
     const handleResize = () => {
@@ -18,11 +22,19 @@ const DashboardLayout = () => {
   }, []);
 
   useSessionTimeout({
-    timeoutMinutes: 30,    
-    warningMinutes: 5,     
-    enabled: true,         
+    timeoutMinutes: 30,
+    warningMinutes: 5,
+    enabled: true,
   });
 
+  // Check if email is verified
+  useEffect(() => {
+    if (user && !user.emailVerified) {
+      setShowVerificationPrompt(true);
+    } else {
+      setShowVerificationPrompt(false);
+    }
+  }, [user]);
   // Function to be passed to Sidebar component to update collapsed state
   const handleSidebarToggle = (collapsed: boolean) => {
     setIsCollapsed(collapsed);
@@ -38,6 +50,11 @@ const DashboardLayout = () => {
       >
         <Outlet />
       </main>
+      {showVerificationPrompt && (
+        <EmailVerificationPrompt
+          onClose={() => setShowVerificationPrompt(false)}
+        />
+      )}
     </div>
   );
 };
