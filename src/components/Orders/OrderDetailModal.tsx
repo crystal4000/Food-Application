@@ -170,7 +170,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         {/* Content - Scrollable */}
         <div className="overflow-y-auto flex-1 p-5 space-y-6">
           {/* Status Badge and Date */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 md:gap-0">
             <div
               className={`flex items-center gap-2 px-4 py-2 rounded-full ${statusConfig.bgColor} ${statusConfig.textColor}`}
             >
@@ -184,37 +184,33 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
           {/* Status Timeline */}
           {order.status !== "cancelled" && (
-            <div className="bg-emerald-50/50 rounded-xl p-4">
-              <div className="flex items-center justify-between">
-                {statusSteps.map((step, index) => {
+            <div className="bg-emerald-50/50 rounded-xl p-0 md:p-4">
+              <div className="relative flex justify-between">
+                {statusSteps.map((step) => {
                   const stepStatus = getStepStatus(step.key);
                   const StepIcon = step.icon;
                   return (
-                    <div key={step.key} className="flex flex-col items-center flex-1">
-                      <div className="flex items-center w-full">
-                        <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            stepStatus === "completed"
-                              ? "bg-green-500 text-white"
-                              : stepStatus === "current"
-                              ? "bg-custom-orange text-emerald-900"
-                              : "bg-gray-200 text-gray-400"
-                          }`}
-                        >
-                          <StepIcon className="w-4 h-4" />
-                        </div>
-                        {index < statusSteps.length - 1 && (
-                          <div
-                            className={`flex-1 h-1 mx-1 ${
-                              stepStatus === "completed"
-                                ? "bg-green-500"
-                                : "bg-gray-200"
-                            }`}
-                          />
-                        )}
+                    <div
+                      key={step.key}
+                      className="flex flex-col items-center relative z-10"
+                      style={{ flex: 1 }}
+                    >
+                      {/* Icon */}
+                      <div
+                        className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mb-2 ${
+                          stepStatus === "completed"
+                            ? "bg-green-500 text-white"
+                            : stepStatus === "current"
+                            ? "bg-custom-orange text-emerald-900"
+                            : "bg-gray-200 text-gray-400"
+                        }`}
+                      >
+                        <StepIcon className="w-5 h-5 md:w-6 md:h-6" />
                       </div>
+
+                      {/* Label */}
                       <p
-                        className={`text-xs mt-2 text-center ${
+                        className={`hidden md:block text-xs text-center max-w-[80px] ${
                           stepStatus === "current"
                             ? "font-semibold text-emerald-900"
                             : "text-emerald-700"
@@ -225,6 +221,23 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     </div>
                   );
                 })}
+
+                {/* Connecting Lines - Positioned absolutely behind icons */}
+                <div className="absolute top-5 md:top-6 left-0 right-0 flex items-center px-[10%] md:px-[8%] -z-0">
+                  {statusSteps.slice(0, -1).map((_, index) => {
+                    const stepStatus = getStepStatus(statusSteps[index].key);
+                    return (
+                      <div
+                        key={index}
+                        className={`h-1 flex-1 ${
+                          stepStatus === "completed"
+                            ? "bg-green-500"
+                            : "bg-gray-200"
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
           )}
@@ -240,14 +253,16 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           )}
 
           {/* Estimated Delivery */}
-          {order.estimatedDelivery && order.status !== "delivered" && order.status !== "cancelled" && (
-            <div className="bg-emerald-50/50 rounded-xl p-4 text-center">
-              <p className="text-sm text-emerald-700">Estimated Delivery</p>
-              <p className="text-lg font-bold text-emerald-900">
-                {order.estimatedDelivery}
-              </p>
-            </div>
-          )}
+          {order.estimatedDelivery &&
+            order.status !== "delivered" &&
+            order.status !== "cancelled" && (
+              <div className="bg-emerald-50/50 rounded-xl p-4 text-center">
+                <p className="text-sm text-emerald-700">Estimated Delivery</p>
+                <p className="text-lg font-bold text-emerald-900">
+                  {order.estimatedDelivery}
+                </p>
+              </div>
+            )}
 
           {/* Order Items */}
           <div>
@@ -274,9 +289,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-emerald-700">
-                      x{item.quantity}
-                    </p>
+                    <p className="text-sm text-emerald-700">x{item.quantity}</p>
                     <p className="font-bold text-emerald-900">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>

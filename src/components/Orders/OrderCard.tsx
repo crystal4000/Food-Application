@@ -97,15 +97,17 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick }) => {
       className="backdrop-blur-md bg-white/30 border border-white/40 rounded-xl p-4 sm:p-5 cursor-pointer hover:bg-white/40 hover:shadow-lg transition-all duration-300"
     >
       {/* Header: Order number and Status */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-3">
         <div>
           <p className="text-xs text-emerald-700">Order</p>
-          <p className="font-bold text-emerald-900">{order.orderNumber}</p>
+          <p className="font-bold text-emerald-900 text-sm sm:text-base">
+            {order.orderNumber}
+          </p>
         </div>
         <div
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full ${statusConfig.bgColor} ${statusConfig.textColor} border ${statusConfig.borderColor}`}
+          className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full ${statusConfig.bgColor} ${statusConfig.textColor} border ${statusConfig.borderColor} self-start sm:self-auto`}
         >
-          <StatusIcon className="w-4 h-4" />
+          <StatusIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span className="text-xs font-semibold">{statusConfig.label}</span>
         </div>
       </div>
@@ -140,8 +142,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick }) => {
       </div>
 
       {/* Footer: Date, Total, and View Details */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/30">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 pt-3 border-t border-white/30">
+        <div className="flex items-center gap-4 sm:gap-4 justify-between">
           <div>
             <p className="text-xs text-emerald-700">Date</p>
             <p className="text-sm font-medium text-emerald-900">
@@ -155,7 +157,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick }) => {
             </p>
           </div>
         </div>
-        <button className="text-sm font-semibold text-emerald-700 hover:text-custom-orange transition-colors">
+        <button className="text-sm font-semibold text-emerald-700 hover:text-custom-orange transition-colors self-start sm:self-auto">
           View Details →
         </button>
       </div>
